@@ -97,11 +97,11 @@
            <img 
 src="https://image.tmdb.org/t/p/w500/9PFonBhy4cQy7Jz20NpMygczOkv.jpg"
 alt="Wednesday"
-
+data-title="Wednesday"
 onclick="openMovie(
 'WEDNESDAY',
 'Smart, sarcastic and a little dead inside, Wednesday Addams investigates a murder mystery.',
-'https://image.tmdb.org/t/p/original/iHSwvRVsRyxpX7FE7GbviaDvgGZ.jpg',
+'https://image.tmdb.org/t/p/original/iHSwvRVsRyxpX7FE7GbviaDvgDvgGZ.jpg',
 'https://www.youtube-nocookie.com/embed/Di310WS8zLk?autoplay=1'
 )"
 >
@@ -215,21 +215,21 @@ onclick="openMovie(
   </div>
 </div>
 <!-- 🎬 VIDEO POPUP -->
+<!-- 🎬 VIDEO POPUP -->
 <div id="videoPopup" class="video-popup">
 
     <div class="video-container">
 
-        <!-- ❌ CLOSE BUTTON -->
         <span class="close-btn" onclick="closeVideo()">✖</span>
 
-        <!-- 🎥 VIDEO -->
         <iframe 
-            id="videoFrame"
-            width="100%" 
-            height="500"
-            frameborder="0"
-            allowfullscreen>
-        </iframe>
+    id="mainVideoFrame"
+    width="100%" 
+    height="500"
+    frameborder="0"
+    allow="autoplay; encrypted-media; fullscreen"
+    allowfullscreen>
+</iframe>
 
     </div>
 
