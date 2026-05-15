@@ -691,6 +691,63 @@ body{
     #videoFrame{
         height:250px;
     }
+
+    /* 🎬 MOBILE MOVIE POPUP */
+
+.movie-card{
+
+    width:95%;
+}
+
+.movie-card img{
+
+    height:220px;
+}
+
+.movie-info{
+
+    padding:20px;
+}
+
+.movie-info h1{
+
+    font-size:28px;
+}
+
+.movie-info p{
+
+    font-size:14px;
+
+    line-height:1.6;
+}
+
+.watch-btn{
+
+    width:100%;
+
+    padding:14px;
+}
+
+.close-movie{
+
+    top:10px;
+    right:15px;
+
+    font-size:28px;
+}
+
+    .banner-slide{
+
+    background-position:center center;
+    }
+
+    .menu{
+
+    overflow-x:auto;
+
+    white-space:nowrap;
+    }
+    
 }
 
 /* 🎬 MOVIE MODAL */
