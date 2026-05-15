@@ -3,21 +3,13 @@ function logout(){
     window.location.href = "index.html";
 }
 
-function playVideo(url){
-    document.getElementById("videoPopup").style.display = "flex";
-    document.getElementById("videoFrame").src = url;
-}
-
-function closeVideo(){
-    document.getElementById("videoPopup").style.display = "none";
-    document.getElementById("videoFrame").src = "";
-}
-
 // SLIDER
 let slides = document.querySelectorAll(".banner-slide");
 let index = 0;
 
 setInterval(() => {
+    if(slides.length === 0) return;
+
     slides[index].classList.remove("active");
     index = (index + 1) % slides.length;
     slides[index].classList.add("active");
@@ -28,42 +20,45 @@ let menuTabs = document.querySelectorAll(".menu span");
 
 menuTabs.forEach(tab => {
     tab.addEventListener("click", function() {
-        document.querySelector(".menu .active").classList.remove("active");
+        let active = document.querySelector(".menu .active");
+        if(active) active.classList.remove("active");
         this.classList.add("active");
     });
 });
 
-/* 🎬 MOVIE IMAGE CLICK */
+/* 🎬 MOVIE IMAGE CLICK (FIXED) */
 
 document.querySelectorAll(".movie-row img").forEach(card => {
 
     card.addEventListener("click", function() {
 
-        let selectedMovie = this.getAttribute("alt");
+        // ✅ FIX: use data-title instead of alt
+        let selectedMovie = this.getAttribute("data-title");
+
+        if(!selectedMovie){
+            console.log("No data-title found");
+            return;
+        }
+
+        selectedMovie = selectedMovie.trim();
 
         /* 🎥 WEDNESDAY */
-
         if(selectedMovie === "Wednesday"){
 
-            openMovie(
-
-                "WEDNESDAY",
-
-                "Smart, sarcastic and a little dead inside, Wednesday Addams investigates a murder mystery.",
-
-                "https://image.tmdb.org/t/p/original/iHSwvRVsRyxpX7FE7GbviaDvgGZ.jpg",
-
-                "https://www.youtube-nocookie.com/embed/Di310WS8zLk?autoplay=1"
-
-            );
-        }
+    openMovie(
+        "WEDNESDAY",
+        "Smart, sarcastic and a little dead inside, Wednesday Addams investigates a murder mystery.",
+        "https://image.tmdb.org/t/p/original/iHSwvRVsRyxpX7FE7GbviaDvgGZ.jpg",
+        "https://www.youtube-nocookie.com/embed/Di310WS8zLk"
+    );
+}
 
     });
 
 });
 
-/* 🎬 CURRENT TRAILER */
 
+/* 🎬 CURRENT STATE */
 let currentVideo = "";
 let currentEpisodeIndex = 0;
 let currentAnimeTitle = "";
@@ -86,7 +81,9 @@ let animeData = {
   ]
 };
 
-// 🟣 OPEN LIST
+// =========================
+// 🟣 OPEN ANIME LIST
+// =========================
 function openAnime(title, image){
 
     document.getElementById("animeModal").style.display = "flex";
@@ -125,12 +122,14 @@ function openAnime(title, image){
     });
 }
 
-// ❌ CLOSE LIST
+// ❌ CLOSE ANIME
 function closeAnime(){
     document.getElementById("animeModal").style.display = "none";
 }
 
+// =========================
 // 🎬 OPEN PLAYER
+// =========================
 function openPlayPopup(title, video, index){
 
     document.getElementById("animeModal").style.display = "none";
@@ -142,6 +141,7 @@ function openPlayPopup(title, video, index){
     currentEpisodeIndex = index;
 
     let frame = document.getElementById("videoFrame");
+
     frame.src = "";
     frame.style.display = "none";
 }
@@ -155,7 +155,9 @@ function playVideoNow(){
     frame.style.display = "block";
 }
 
-// ⏭ NEXT EPISODE (MANUAL ONLY)
+// =========================
+// ⏭ NEXT EPISODE FIXED
+// =========================
 function playNextEpisode(){
 
     let list = animeData[currentAnimeTitle];
@@ -187,5 +189,70 @@ function closePlay(){
     document.getElementById("playModal").style.display = "none";
 
     let frame = document.getElementById("videoFrame");
+    frame.src = "";
+}
+
+// =========================
+// 🎬 MOVIE SYSTEM (WEDNESDAY FIX)
+// =========================
+function openMovie(title, text, image, video){
+
+    document.getElementById("movieModal").style.display = "flex";
+
+    document.getElementById("movieTitle").innerText = title;
+    document.getElementById("movieText").innerText = text;
+    document.getElementById("movieImage").src = image;
+
+    currentVideo = video;
+}
+
+// ▶ MOVIE PLAY
+function playMovieTrailer(){
+    let popup = document.getElementById("videoPopup");
+    let frame = document.getElementById("mainVideoFrame");
+
+    popup.style.display = "flex";
+
+    // force clean reset
+    frame.src = "";
+
+    setTimeout(() => {
+
+        // 🔥 FIX: always use autoplay + mute + embed safe mode
+        frame.src = currentVideo.includes("?")
+            ? currentVideo + "&autoplay=1&mute=1"
+            : currentVideo + "?autoplay=1&mute=1";
+
+    }, 200);
+}
+
+function closeMovie(){
+    document.getElementById("movieModal").style.display = "none";
+}
+
+// =========================
+// 🎥 FIXED BANNER VIDEO POPUP
+// =========================
+
+function playVideo(url) {
+    let popup = document.getElementById("videoPopup");
+    let frame = document.getElementById("mainVideoFrame");
+
+    popup.style.display = "flex";
+
+    frame.src = "";
+
+    setTimeout(() => {
+        frame.src = url + "&autoplay=1&mute=1";
+    }, 150);
+}
+
+function closeVideo() {
+    let popup = document.getElementById("videoPopup");
+    let frame = document.getElementById("mainVideoFrame");
+
+    popup.style.display = "none";
+
+    // stop video properly
     frame.src = "";
 }
