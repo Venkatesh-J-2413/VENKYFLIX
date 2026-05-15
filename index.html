@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>VENKYFLIX DEMO</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="hero">
+
+        <div class="navbar">
+
+        <h1 class="logo">VENKYFLIX</h1>
+
+        <div class="nav-buttons">
+
+        <a href="login.html">
+            <button>Sign In</button>
+        </a>
+
+        <a href="signup.html">
+            <button class="signup-btn">Sign Up</button>
+        </a>
+
+        </div>
+
+    </div>
+
+        <div class="content">
+
+            <h2>Unlimited movies, TV shows and more.</h2>
+
+            <p>Watch anywhere. Cancel anytime.</p>
+
+        </div>
+
+    </div>
+    <script>
+
+    if(localStorage.getItem("loggedIn") === "true"){
+
+        window.location.href = "home.html";
+
+    }
+
+    </script>
+</body>
+
+</html>

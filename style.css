@@ -1,0 +1,138 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial;
+    color:white;
+}
+
+.hero{
+    width:100%;
+    height:100vh;
+
+    background:
+    linear-gradient(rgba(0,0,0,0.7),
+    rgba(0,0,0,0.7)),
+    url("https://images.pexels.com/photos/210186/pexels-photo-210186.jpeg?cs=srgb&dl=cascade-clouds-cool-wallpaper-210186.jpg&fm=jpg");
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+
+    position:relative;
+}
+
+.navbar{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:20px 60px;
+
+    position:absolute;
+    top:0;
+    left:0;
+}
+
+.logo{
+    color:red;
+    font-size:48px;
+    font-weight:bold;
+}
+
+.nav-buttons{
+    display:flex;
+    gap:15px;
+}
+
+button{
+    padding:10px 22px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+
+    transition:0.3s;
+
+    transform-style:preserve-3d;
+}
+
+button:hover{
+
+    transform:
+    translateY(-5px)
+    scale(1.05);
+
+    box-shadow:
+    0 10px 25px rgba(0,0,0,0.5);
+
+}
+
+.nav-buttons button{
+    background:red;
+    color:white;
+}
+
+.signup-btn{
+    background:white !important;
+    color:black !important;
+}
+
+.content{
+    width:100%;
+    height:100vh;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    padding:20px;
+}
+
+.content h2{
+    font-size:65px;
+    max-width:800px;
+}
+
+.content p{
+    margin-top:20px;
+    font-size:24px;
+}
+
+/* MOBILE RESPONSIVE */
+
+@media(max-width:768px){
+
+    .navbar{
+        padding:20px;
+    }
+
+    .logo{
+        font-size:32px;
+    }
+
+    .nav-buttons{
+        gap:10px;
+    }
+
+    button{
+        padding:8px 14px;
+        font-size:14px;
+    }
+
+    .content h2{
+        font-size:38px;
+    }
+
+    .content p{
+        font-size:18px;
+    }
+
+}

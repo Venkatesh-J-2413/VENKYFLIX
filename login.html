@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+
+    <div class="login-box">
+
+    <h1>Sign In</h1>
+
+    <input type="email" id="email" placeholder="Email">
+
+    <div class="password-box">
+
+        <input type="password" id="password" placeholder="Password">
+
+        <span onclick="togglePassword()" class="eye" id="eyeIcon">
+            👁️
+        </span>
+
+    </div>
+
+    <button onclick="login()">Login</button>
+
+    <p id="message"></p>
+
+</div>
+
+<script src="login.js"></script>
+
+</body>
+
+</html>
