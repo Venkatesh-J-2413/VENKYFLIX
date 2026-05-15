@@ -67,8 +67,6 @@ document.querySelectorAll(".movie-row img").forEach(card => {
 let currentVideo = "";
 let currentEpisodeIndex = 0;
 let currentAnimeTitle = "";
-let watchTimer = null;
-let autoNextEnabled = true;
 
 // 🎬 DATA
 let animeData = {
@@ -88,6 +86,7 @@ let animeData = {
   ]
 };
 
+// 🟣 OPEN LIST
 function openAnime(title, image){
 
     document.getElementById("animeModal").style.display = "flex";
@@ -126,10 +125,12 @@ function openAnime(title, image){
     });
 }
 
+// ❌ CLOSE LIST
 function closeAnime(){
     document.getElementById("animeModal").style.display = "none";
 }
 
+// 🎬 OPEN PLAYER
 function openPlayPopup(title, video, index){
 
     document.getElementById("animeModal").style.display = "none";
@@ -143,40 +144,18 @@ function openPlayPopup(title, video, index){
     let frame = document.getElementById("videoFrame");
     frame.src = "";
     frame.style.display = "none";
-
-    clearInterval(watchTimer);
 }
 
+// ▶ PLAY VIDEO
 function playVideoNow(){
 
     let frame = document.getElementById("videoFrame");
 
     frame.src = currentVideo;
     frame.style.display = "block";
-
-    startAutoNext();
 }
 
-function startAutoNext(){
-
-    clearInterval(watchTimer);
-
-    let time = 0;
-
-    watchTimer = setInterval(() => {
-
-        time++;
-
-        // ⏳ demo timing (20 sec)
-        if(autoNextEnabled && time >= 20){
-
-            playNextEpisode();
-            time = 0;
-        }
-
-    }, 1000);
-}
-
+// ⏭ NEXT EPISODE (MANUAL ONLY)
 function playNextEpisode(){
 
     let list = animeData[currentAnimeTitle];
@@ -185,8 +164,6 @@ function playNextEpisode(){
     let nextIndex = currentEpisodeIndex + 1;
 
     if(nextIndex >= list.length){
-
-        clearInterval(watchTimer);
         alert("🎉 Season Finished pa!");
         return;
     }
@@ -204,12 +181,11 @@ function playNextEpisode(){
     frame.style.display = "block";
 }
 
+// ❌ CLOSE PLAYER
 function closePlay(){
 
     document.getElementById("playModal").style.display = "none";
 
     let frame = document.getElementById("videoFrame");
     frame.src = "";
-
-    clearInterval(watchTimer);
 }
