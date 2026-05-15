@@ -154,6 +154,66 @@ onclick="openMovie(
         </div>
     </div>
 
+<!-- ⭐ Anime section idhu inga varanum -->
+<!-- ⭐ ANIME SECTION -->
+<div class="section">
+  <h2 class="section-title">Anime in Tamil</h2>
+
+  <div class="movie-row">
+
+    <img 
+      src="https://static.tvtropes.org/pmwiki/pub/images/im_getting_married_to_a_girl_i_hate_in_my_class.png"
+      alt="Anime"
+      onclick="openAnime('I\'m Getting Married Season 1', this.src)"
+    >
+
+  </div>
+</div>
+
+<!-- 🟣 ANIME EPISODE POPUP -->
+<div id="animeModal" class="movie-modal">
+  <div class="movie-box">
+
+    <span onclick="closeAnime()" style="font-size:45px;cursor:pointer;">×</span>
+
+    <img id="animeImage" style="width:100%;border-radius:10px;">
+    <h2 id="animeTitle"></h2>
+
+    <div id="episodeList"></div>
+
+  </div>
+</div>
+
+<!-- 🎬 PLAY POPUP -->
+<div id="playModal" class="movie-modal">
+  <div class="movie-box">
+
+    <span onclick="closePlay()" style="font-size:45px;cursor:pointer;">×</span>
+
+    <h2 id="epTitle"></h2>
+
+    <!-- 🎥 VIDEO FIRST -->
+    <iframe 
+      id="videoFrame"
+      width="100%"
+      height="250"
+      style="display:none;margin-top:15px;border-radius:10px;"
+      allow="autoplay; fullscreen"
+      allowfullscreen>
+    </iframe>
+
+    <!-- ▶ PLAY BUTTON -->
+    <button class="play-movie-btn" onclick="playVideoNow()">
+      ▶ PLAY
+    </button>
+
+    <!-- ⏭ NEXT EPISODE BUTTON (BELOW VIDEO) -->
+    <button class="play-movie-btn" onclick="playNextEpisode()">
+      ⏭ NEXT EPISODE
+    </button>
+
+  </div>
+</div>
 <!-- 🎬 VIDEO POPUP -->
 <div id="videoPopup" class="video-popup">
 
@@ -203,6 +263,8 @@ onclick="openMovie(
 
 </div>
 
+    <!-- IMPORTANT: allowfullscreen + sandbox -->
+ 
 <!-- 🔥 FOOTER -->
 <footer style="
 text-align:center;
