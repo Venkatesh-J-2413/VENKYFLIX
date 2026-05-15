@@ -33,10 +33,66 @@ menuTabs.forEach(tab => {
     });
 });
 
-// MOVIE CLICK
+/* 🎬 MOVIE IMAGE CLICK */
+
 document.querySelectorAll(".movie-row img").forEach(card => {
+
     card.addEventListener("click", function() {
+
         let selectedMovie = this.getAttribute("alt");
-        alert("Opening: " + selectedMovie);
+
+        /* 🎥 WEDNESDAY */
+
+        if(selectedMovie === "Wednesday"){
+
+            openMovie(
+
+                "WEDNESDAY",
+
+                "Smart, sarcastic and a little dead inside, Wednesday Addams investigates a murder mystery.",
+
+                "https://image.tmdb.org/t/p/original/iHSwvRVsRyxpX7FE7GbviaDvgGZ.jpg",
+
+                "https://www.youtube-nocookie.com/embed/Di310WS8zLk?autoplay=1"
+
+            );
+        }
+
     });
+
 });
+
+/* 🎬 CURRENT TRAILER */
+
+let currentTrailer = "";
+
+/* 🎬 OPEN MOVIE POPUP */
+
+function openMovie(title,text,image,trailer){
+
+    document.getElementById("movieModal").style.display = "flex";
+
+    document.getElementById("movieTitle").innerHTML = title;
+
+    document.getElementById("movieText").innerHTML = text;
+
+    document.getElementById("movieImage").src = image;
+
+    currentTrailer = trailer;
+}
+
+/* ❌ CLOSE POPUP */
+
+function closeMovie(){
+
+    document.getElementById("movieModal").style.display = "none";
+}
+
+/* ▶ PLAY TRAILER */
+
+function playMovieTrailer(){
+
+    closeMovie();
+
+    playVideo(currentTrailer);
+}
