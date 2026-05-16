@@ -579,13 +579,6 @@ body{
     aspect-ratio: 16 / 9;
 }
 
-#videoFrame{
-    width:100%;
-    height:100%;
-    border:none;
-    border-radius:18px;
-}
-
 /* ❌ CLOSE BUTTON */
 
 .close-btn{
@@ -1026,4 +1019,112 @@ body{
         height: 220px;   /* 🔥 mobile fix */
         border-radius: 12px;
     }
+}
+
+/* 🔥 SOLO LEVELING */
+
+.season-btn{
+
+    width:100%;
+
+    padding:14px;
+
+    margin-top:15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:linear-gradient(
+    45deg,
+    #ff003c,
+    #ff4d4d
+    );
+
+    color:white;
+
+    font-size:17px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+.season-btn:hover{
+
+    transform:scale(1.03);
+
+    box-shadow:
+    0 0 20px rgba(255,0,60,0.5);
+}
+
+/* 🔥 SOLO SEASON BOX */
+
+#soloSeason1,
+#soloSeason2{
+
+    display:none;
+
+    margin-top:12px;
+}
+
+/* 🔥 SOLO POPUP */
+
+#soloModal .movie-box{
+
+    width:95%;
+    max-width:500px;
+
+    background:#181818;
+
+    border-radius:20px;
+
+    padding:25px;
+
+    overflow-y:auto;
+
+    max-height:90vh;
+}
+
+/* 🔥 PLAY POPUP VIDEO */
+
+#playModal #videoFrame{
+
+    width:100%;
+
+    height:420px;
+
+    border:none;
+
+    border-radius:16px;
+
+    margin-top:15px;
+}
+
+/* 📱 MOBILE */
+
+@media(max-width:768px){
+
+    #playModal #videoFrame{
+
+        height:220px;
+    }
+
+    #soloModal .movie-box{
+
+        width:95%;
+        padding:18px;
+    }
+}
+
+.video-container{
+
+    position:relative;
+    width:100%;
+    max-width:900px;
+    aspect-ratio:16/9;
+
+    overflow:hidden;
+    border-radius:20px;
 }
