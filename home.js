@@ -62,6 +62,7 @@ document.querySelectorAll(".movie-row img").forEach(card => {
 let currentVideo = "";
 let currentEpisodeIndex = 0;
 let currentAnimeTitle = "";
+let currentEpisodeList = [];
 
 // 🎬 DATA
 let animeData = {
@@ -130,7 +131,8 @@ function closeAnime(){
 // =========================
 // 🎬 OPEN PLAYER
 // =========================
-function openPlayPopup(title, video, index){
+function openPlayPopup(title, video, index, list = []){
+
 
     document.getElementById("animeModal").style.display = "none";
     document.getElementById("playModal").style.display = "flex";
@@ -139,6 +141,8 @@ function openPlayPopup(title, video, index){
 
     currentVideo = video;
     currentEpisodeIndex = index;
+
+    currentEpisodeList = list;
 
     let frame = document.getElementById("videoFrame");
 
@@ -156,23 +160,107 @@ function playVideoNow(){
 }
 
 // =========================
+// ⏭ PREVIOUS EPISODE FIXED
+// =========================
+
+function playPreviousEpisode(){
+
+    let allEpisodes = [];
+
+    // 🔥 SOLO LEVELING
+    if(currentAnimeTitle === "Solo Leveling"){
+
+        Object.keys(soloLeveling).forEach(season => {
+
+            soloLeveling[season].forEach(ep => {
+
+                allEpisodes.push({
+                    name: ep.title,
+                    video: ep.link
+                });
+
+            });
+
+        });
+
+    }
+
+    // 🔥 NORMAL ANIME
+    else{
+
+        allEpisodes = animeData[currentAnimeTitle];
+    }
+
+    if(!allEpisodes) return;
+
+    let prevIndex = currentEpisodeIndex - 1;
+
+    if(prevIndex < 0){
+
+        alert("🔥 This is first episode pa!");
+        return;
+    }
+
+    let prev = allEpisodes[prevIndex];
+
+    currentEpisodeIndex = prevIndex;
+
+    currentVideo = prev.video;
+
+    document.getElementById("epTitle").innerText = prev.name;
+
+    let frame = document.getElementById("videoFrame");
+
+    frame.src = prev.video;
+
+    frame.style.display = "block";
+}
+
+// =========================
 // ⏭ NEXT EPISODE FIXED
 // =========================
 function playNextEpisode(){
 
-    let list = animeData[currentAnimeTitle];
-    if(!list) return;
+    let allEpisodes = [];
+
+    // 🔥 SOLO LEVELING
+    if(currentAnimeTitle === "Solo Leveling"){
+
+        Object.keys(soloLeveling).forEach(season => {
+
+            soloLeveling[season].forEach(ep => {
+
+                allEpisodes.push({
+                    name: ep.title,
+                    video: ep.link
+                });
+
+            });
+
+        });
+
+    }
+
+    // 🔥 NORMAL ANIME
+    else{
+
+        allEpisodes = animeData[currentAnimeTitle];
+    }
+
+    if(!allEpisodes) return;
 
     let nextIndex = currentEpisodeIndex + 1;
 
-    if(nextIndex >= list.length){
+    if(nextIndex >= allEpisodes.length){
+
         alert("🎉 Season Finished pa!");
         return;
     }
 
-    let next = list[nextIndex];
+    let next = allEpisodes[nextIndex];
 
     currentEpisodeIndex = nextIndex;
+
     currentVideo = next.video;
 
     document.getElementById("epTitle").innerText = next.name;
@@ -180,6 +268,7 @@ function playNextEpisode(){
     let frame = document.getElementById("videoFrame");
 
     frame.src = next.video;
+
     frame.style.display = "block";
 }
 
@@ -255,4 +344,222 @@ function closeVideo() {
 
     // stop video properly
     frame.src = "";
+}
+
+const soloLeveling = {
+
+    "Season 1": [
+
+        {
+            title:"Episode 1",
+            link:"https://drive.google.com/file/d/10zZWh9rQAO9IHCcuDGPKu1TqDlxAoPhF/preview"
+        },
+
+        {
+            title:"Episode 2",
+            link:"https://drive.google.com/file/d/1gM4B-VHkDVun8q-Ja21Ap5Jxd_ik8_hj/preview"
+        },
+
+        {
+            title:"Episode 3",
+            link:"https://drive.google.com/file/d/1bS4qLbT3hWTORG2Go_UnXVgVVDs-naoB/preview"
+        },
+
+        {
+            title:"Episode 4",
+            link:"https://drive.google.com/file/d/1cF9nwlTPVVGmMhNoQbGWq6BZXBrSAI-0/preview"
+        },
+
+        {
+            title:"Episode 5",
+            link:"https://drive.google.com/file/d/1fPmFD9onH4hVmcUGYkrrRa9HNQIY1JH1/preview"
+        },
+
+        {
+            title:"Episode 6",
+            link:"https://drive.google.com/file/d/18zdc1bv0doGxQxWG8FxcYfraKABT3BQC/preview"
+        },
+
+        {
+            title:"Episode 7",
+            link:"https://drive.google.com/file/d/1sXpFGJiK9qV7CsZEOUYDVl9OBuWz1drA/preview"
+        },
+
+        {
+            title:"Episode 8",
+            link:"https://drive.google.com/file/d/1sZer-Wc6WZGDVVBb82KNytOj1d7ig66W/preview"
+        },
+
+        {
+            title:"Episode 9",
+            link:"https://drive.google.com/file/d/1zzyuBjujnOTWA2swxofMVxmnDrLaFYfc/preview"
+        },
+
+        {
+            title:"Episode 10",
+            link:"https://drive.google.com/file/d/1TZMNHnadw0wn_50hZ0hvMV4K7gsX3C74/preview"
+        },
+
+        {
+            title:"Episode 11",
+            link:"https://drive.google.com/file/d/1Xd-aKVtpBC8S651rvKX4Mt-zfCq6A1zR/preview"
+        },
+
+        {
+            title:"Episode 12",
+            link:"https://drive.google.com/file/d/1JEKikBH7HHTjqbMvV6hY5EL55JKGiIVN/preview"
+        }
+
+    ],
+
+    "Season 2": [
+
+        {
+            title:"Episode 1",
+            link:"https://drive.google.com/file/d/13Xvpm1VRG6T_W6-m0AIc9ds7tg70jCMU/preview"
+        },
+
+        {
+            title:"Episode 2",
+            link:"https://drive.google.com/file/d/1fTfKoLf4kfI4vJ6xHZ0jupXWlXJNrK2m/preview"
+        },
+
+        {
+            title:"Episode 3",
+            link:"https://drive.google.com/file/d/1OXaocT9-ngKOB643QWOCWUAxGIfVH-ic/preview"
+        },
+
+        {
+            title:"Episode 4",
+            link:"https://drive.google.com/file/d/1eKawYy9c20aASMuHIrTFTm8ZX4IY4yH3/preview"
+        },
+
+        {
+            title:"Episode 5",
+            link:"https://drive.google.com/file/d/11B56AmtC8tffO6WuSZKjOzRAD6OSmdjG/preview"
+        },
+
+        {
+            title:"Episode 6",
+            link:"https://drive.google.com/file/d/11B56AmtC8tffO6WuSZKjOzRAD6OSmdjG/preview"
+        },
+
+        {
+            title:"Episode 7",
+            link:"https://drive.google.com/file/d/1-WKxVIwcpgX0oyx-EpyUJXy5SOKZxj_Y/preview"
+        },
+
+        {
+            title:"Episode 8",
+            link:"https://drive.google.com/file/d/1XoDIy1WB2dJHgbUC_qPpy2dkSLpYSi30/preview"
+        },
+
+        {
+            title:"Episode 9",
+            link:"https://drive.google.com/file/d/1o_aJus_JVexq2jiI6m3TZuk4Lqvf7ok-/preview"
+        },
+
+        {
+            title:"Episode 10",
+            link:"https://drive.google.com/file/d/1uOog1B-KG4IEyncxAz-h5Q_-wrYTFbQt/preview"
+        }
+
+    ]
+};
+
+/* 🔥 OPEN SOLO LEVELING */
+
+function openSoloLeveling(){
+
+    currentAnimeTitle = "Solo Leveling";
+
+    document.getElementById("soloModal").style.display = "flex";
+
+    let content = "";
+
+    Object.keys(soloLeveling).forEach(season => {
+
+        content += `
+
+        <button class="season-btn"
+        onclick="toggleSeason('${season}')">
+
+            ${season}
+
+        </button>
+
+        <div id="${season}" style="display:none;">
+        `;
+
+        soloLeveling[season].forEach((ep,index)=>{
+
+    content += `
+
+    <div class="ep-card"
+    onclick="openPlayPopup(
+    '${ep.title}',
+    '${ep.link}',
+    ${index}
+    )">
+
+        <div class="ep-left">
+
+            <div class="ep-number">
+                ${index + 1}
+            </div>
+
+        </div>
+
+        <div class="ep-right">
+
+            <div class="ep-title">
+                ${ep.title}
+            </div>
+
+            <div class="ep-sub">
+                Tap to watch
+            </div>
+
+        </div>
+
+        <div class="ep-play">
+            ▶
+        </div>
+
+    </div>
+    `;
+});
+
+        content += `</div>`;
+    });
+
+    document.getElementById("soloContent").innerHTML = content;
+
+    currentAnimeTitle = "Solo Leveling";
+}
+
+
+/* 🔥 CLOSE */
+
+function closeSoloLeveling(){
+
+    document.getElementById("soloModal").style.display = "none";
+}
+
+
+/* 🔥 TOGGLE */
+
+function toggleSeason(id){
+
+    let season = document.getElementById(id);
+
+    if(season.style.display === "none"){
+
+        season.style.display = "block";
+    }
+
+    else{
+
+        season.style.display = "none";
+    }
 }
