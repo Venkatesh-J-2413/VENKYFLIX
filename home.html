@@ -167,6 +167,16 @@ onclick="openMovie(
       onclick="openAnime('I\'m Getting Married Season 1', this.src)"
     >
 
+    
+
+<img
+src="https://i.pinimg.com/originals/c3/7f/2a/c37f2aa4a23a8096dddb8609b4a92a6f.jpg"
+alt="Solo Leveling"
+onclick="openSoloLeveling('Solo Leveling', this.src)"
+/>
+
+
+
   </div>
 </div>
 
@@ -182,6 +192,29 @@ onclick="openMovie(
     <div id="episodeList"></div>
 
   </div>
+</div>
+
+<!-- 🔥 SOLO LEVELING POPUP -->
+<div id="soloModal" class="movie-modal">
+
+  <div class="movie-box">
+
+    <span onclick="closeSoloLeveling()"
+    style="font-size:45px;cursor:pointer;">×</span>
+
+    <img
+    src="https://i.pinimg.com/originals/c3/7f/2a/c37f2aa4a23a8096dddb8609b4a92a6f.jpg"
+    style="width:100%;border-radius:12px;margin-bottom:15px;">
+
+    <h1 style="margin-bottom:20px;">
+      SOLO LEVELING
+    </h1>
+
+    <!-- 🔥 AUTO CONTENT -->
+    <div id="soloContent"></div>
+
+  </div>
+
 </div>
 
 <!-- 🎬 PLAY POPUP -->
@@ -207,6 +240,11 @@ onclick="openMovie(
       ▶ PLAY
     </button>
 
+    <!-- ⏭ PREVIOUS EPISODE BUTTON (BELOW VIDEO) -->
+    <button class="play-movie-btn" onclick="playPreviousEpisode()">
+      ⏮ PREVIOUS EPISODE
+    </button>
+
     <!-- ⏭ NEXT EPISODE BUTTON (BELOW VIDEO) -->
     <button class="play-movie-btn" onclick="playNextEpisode()">
       ⏭ NEXT EPISODE
@@ -227,7 +265,7 @@ onclick="openMovie(
     width="100%" 
     height="500"
     frameborder="0"
-    allow="autoplay; encrypted-media; fullscreen"
+    allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
     allowfullscreen>
 </iframe>
 
@@ -239,7 +277,7 @@ onclick="openMovie(
 
 <div id="movieModal" class="movie-modal">
 
-    <div class="movie-card">
+    <div class="movie-card" id="movieBox">
 
         <span class="close-movie" onclick="closeMovie()">✖</span>
 
@@ -262,6 +300,8 @@ onclick="openMovie(
     </div>
 
 </div>
+
+
 
     <!-- IMPORTANT: allowfullscreen + sandbox -->
  
