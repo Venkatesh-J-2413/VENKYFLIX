@@ -32,37 +32,108 @@ document.querySelectorAll(".movie-row img").forEach(card => {
 
     card.addEventListener("click", function() {
 
-        // ✅ FIX: use data-title instead of alt
         let selectedMovie = this.getAttribute("data-title");
 
-        if(!selectedMovie){
-            console.log("No data-title found");
-            return;
-        }
+        if(!selectedMovie) return;
 
         selectedMovie = selectedMovie.trim();
 
-        /* 🎥 WEDNESDAY */
         if(selectedMovie === "Wednesday"){
-
-    openMovie(
-        "WEDNESDAY",
-        "Smart, sarcastic and a little dead inside, Wednesday Addams investigates a murder mystery.",
-        "https://image.tmdb.org/t/p/original/iHSwvRVsRyxpX7FE7GbviaDvgGZ.jpg",
-        "https://www.youtube-nocookie.com/embed/Di310WS8zLk"
-    );
-}
-
+            openWednesday(this.src);
+        }
     });
 
 });
 
-
 /* 🎬 CURRENT STATE */
+/* =========================
+   GLOBAL STATE
+========================= */
+
 let currentVideo = "";
 let currentEpisodeIndex = 0;
 let currentAnimeTitle = "";
 let currentEpisodeList = [];
+
+
+/* =========================
+   WEDNESDAY DATA (FIXED EP1)
+========================= */
+
+let seriesData = {
+  "Wednesday": {
+    "Season 1": [
+      { name: "Episode 1", video: "https://drive.google.com/file/d/1Ujwwo8G21uCkSkQLqEynfRHgsOhb5c9p/preview" },
+      { name: "Episode 2 to 8", video: "https://gofile.io/d/M0qiaw" }
+    ]
+  }
+};
+
+
+/* =========================
+   OPEN WEDNESDAY
+========================= */
+
+function openWednesday(image){
+
+    document.getElementById("animeModal").style.display = "flex";
+    document.getElementById("animeTitle").innerText = "Wednesday";
+    document.getElementById("animeImage").src = image;
+
+    currentAnimeTitle = "Wednesday";
+
+    let list = document.getElementById("episodeList");
+    list.innerHTML = "";
+
+    let seasons = Object.keys(seriesData["Wednesday"]);
+
+    seasons.forEach(season => {
+
+        let btn = document.createElement("button");
+        btn.className = "season-btn";
+        btn.innerText = season;
+
+        btn.onclick = function(){
+
+            let existing = document.getElementById("eps_" + season);
+
+            if(existing){
+                existing.remove();
+                return;
+            }
+
+            let div = document.createElement("div");
+            div.id = "eps_" + season;
+
+            let episodeList = seriesData["Wednesday"][season];
+
+            episodeList.forEach((ep, index) => {
+
+                let item = document.createElement("div");
+                item.className = "ep-card";
+
+                item.innerHTML = `
+                    <div class="ep-number">${index + 1}</div>
+                    <div class="ep-title">${ep.name}</div>
+                    <div class="ep-sub">Tap to watch</div>
+                `;
+
+                item.onclick = function(){
+
+                    // 🔥 IMPORTANT FIX (FULL LIST PASS)
+                    openPlayPopup(ep.name, ep.video, index, episodeList);
+
+                };
+
+                div.appendChild(item);
+            });
+
+            list.appendChild(div);
+        };
+
+        list.appendChild(btn);
+    });
+}
 
 // 🎬 DATA
 let animeData = {
@@ -79,7 +150,7 @@ let animeData = {
     { name: "Episode 10", video: "https://drive.google.com/file/d/1P2usgwr0dqUfhrbJld1Ar2uwHXrh5Okj/preview" },
     { name: "Episode 11", video: "https://drive.google.com/file/d/1BV2m_mP0TNQKDhWBhWCL2niVriMXLX1m/preview" },
     { name: "Episode 12", video: "https://drive.google.com/file/d/1Javzfa6oDP_mOcCVPYc0dUK9h6KG4RMR/preview" }
-  ]
+  ],
 };
 
 // =========================
@@ -133,7 +204,6 @@ function closeAnime(){
 // =========================
 function openPlayPopup(title, video, index, list = []){
 
-
     document.getElementById("animeModal").style.display = "none";
     document.getElementById("playModal").style.display = "flex";
 
@@ -141,23 +211,29 @@ function openPlayPopup(title, video, index, list = []){
 
     currentVideo = video;
     currentEpisodeIndex = index;
-
     currentEpisodeList = list;
 
     let frame = document.getElementById("videoFrame");
-
     frame.src = "";
     frame.style.display = "none";
 }
 
-// ▶ PLAY VIDEO
 function playVideoNow(){
+
+    if(currentVideo.includes("gofile.io")){
+
+        
+        window.location.href = currentVideo;
+        return;
+    }
 
     let frame = document.getElementById("videoFrame");
 
     frame.src = currentVideo;
     frame.style.display = "block";
 }
+
+// ▶ PLAY VIDEO
 
 // =========================
 // ⏭ PREVIOUS EPISODE FIXED
@@ -167,36 +243,26 @@ function playPreviousEpisode(){
 
     let allEpisodes = [];
 
-    // 🔥 SOLO LEVELING
-    if(currentAnimeTitle === "Solo Leveling"){
-
+    if(currentAnimeTitle === "Wednesday"){
+        allEpisodes = currentEpisodeList;
+    }
+    else if(currentAnimeTitle === "Solo Leveling"){
         Object.keys(soloLeveling).forEach(season => {
-
             soloLeveling[season].forEach(ep => {
-
                 allEpisodes.push({
                     name: ep.title,
                     video: ep.link
                 });
-
             });
-
         });
-
     }
-
-    // 🔥 NORMAL ANIME
     else{
-
         allEpisodes = animeData[currentAnimeTitle];
     }
-
-    if(!allEpisodes) return;
 
     let prevIndex = currentEpisodeIndex - 1;
 
     if(prevIndex < 0){
-
         alert("🔥 This is first episode pa!");
         return;
     }
@@ -204,15 +270,12 @@ function playPreviousEpisode(){
     let prev = allEpisodes[prevIndex];
 
     currentEpisodeIndex = prevIndex;
-
     currentVideo = prev.video;
 
     document.getElementById("epTitle").innerText = prev.name;
 
     let frame = document.getElementById("videoFrame");
-
     frame.src = prev.video;
-
     frame.style.display = "block";
 }
 
@@ -223,36 +286,26 @@ function playNextEpisode(){
 
     let allEpisodes = [];
 
-    // 🔥 SOLO LEVELING
-    if(currentAnimeTitle === "Solo Leveling"){
-
+    if(currentAnimeTitle === "Wednesday"){
+        allEpisodes = currentEpisodeList;
+    }
+    else if(currentAnimeTitle === "Solo Leveling"){
         Object.keys(soloLeveling).forEach(season => {
-
             soloLeveling[season].forEach(ep => {
-
                 allEpisodes.push({
                     name: ep.title,
                     video: ep.link
                 });
-
             });
-
         });
-
     }
-
-    // 🔥 NORMAL ANIME
     else{
-
         allEpisodes = animeData[currentAnimeTitle];
     }
-
-    if(!allEpisodes) return;
 
     let nextIndex = currentEpisodeIndex + 1;
 
     if(nextIndex >= allEpisodes.length){
-
         alert("🎉 Season Finished pa!");
         return;
     }
@@ -260,15 +313,12 @@ function playNextEpisode(){
     let next = allEpisodes[nextIndex];
 
     currentEpisodeIndex = nextIndex;
-
     currentVideo = next.video;
 
     document.getElementById("epTitle").innerText = next.name;
 
     let frame = document.getElementById("videoFrame");
-
     frame.src = next.video;
-
     frame.style.display = "block";
 }
 
